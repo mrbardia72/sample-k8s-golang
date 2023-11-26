@@ -1,0 +1,20 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-kuber-bardia
+spec:
+  template:
+    metadata:
+      name: pod-kuber-bardia
+      labels:
+        app: test-bardia
+        type: back-end
+    spec:
+      containers:
+        - image: xxgrg52mshs8945q/kuber-bardia
+          name: container-bardia
+  replicas: 6
+  selector:
+    matchLabels:
+      type: back-end

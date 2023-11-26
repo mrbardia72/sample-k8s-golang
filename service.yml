@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-kuber-bardia
+spec:
+  type: NodePort
+  ports:
+    - targetPort: 4232
+      port: 80
+      nodePort: 30009
+  selector:
+    app: test-service-kuber-bardia
