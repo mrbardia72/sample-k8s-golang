@@ -1,0 +1,33 @@
+*** Run a Single-Instance Stateful Application
+
+** Objectives
+- Create a PersistentVolume referencing a disk in your environment.
+- Create a MySQL Deployment.
+- Expose MySQL to other pods in the cluster at a known DNS name.
+
+* Deploy the PV  of the YAML file:
+kubectl apply -f mysql-pv.yaml
+
+* Deploy the  PVC of the YAML file:
+kubectl apply -f mysql-pvc.yaml
+
+* Deploy the deployment of the YAML file:
+kubectl apply -f mysql-deployment.yaml
+
+* Deploy the service of the YAML file:
+kubectl apply -f mysql-service.yaml
+
+* Display information about the Deployment:
+kubectl describe deployment mysql
+
+List the pods created by the Deployment:
+kubectl get pods -l app=mysql
+
+inspect the PersistentVolumeClaim:
+kubectl describe pvc mysql-pv-claim
+
+
+
+
+
+

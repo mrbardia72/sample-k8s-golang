@@ -1,0 +1,47 @@
+    ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-kuber-bardia
+  labels:
+  	app: test-bardia
+  	type: back-end
+spec:
+  template:
+    metadata:
+      name: pod-kuber-bardia
+      labels:
+        app: test-bardia
+        type: back-end
+    spec:
+      containers:
+        - image: xxgrg52mshs8945q/kuber-bardia
+          name: container-bardia
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 4232
+          env:
+            - name: PORT_API
+              valueFrom:
+                configMapKeyRef:
+                  name: the-api-port
+                  key: apiPort
+          livenessProbe:  # To check the health of the Pod
+            httpGet:
+              path: /health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 15
+            timeoutSeconds: 5
+          readinessProbe: # To check if the Pod is ready to serve traffic or not
+            httpGet:
+              path: /readiness
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 5
+            timeoutSeconds: 1
+  replicas: 3
+  selector:
+    matchLabels:
+      type: back-end

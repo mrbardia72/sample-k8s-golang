@@ -1,0 +1,13 @@
+*** Run a Replicated Stateful Application
+
+** Objectives
+Deploy a replicated MySQL topology with a StatefulSet.
+Send MySQL client traffic.
+Observe resistance to downtime.
+Scale the StatefulSet up and down.
+
+
+
+
+
+

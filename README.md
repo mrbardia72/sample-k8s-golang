@@ -63,3 +63,5 @@ $ kubectl delete service service-kuber-bardia
 ``` 
 $ kubectl delete deployment deploy-kuber-bardia
 ```
+
+kustomize build zarf/k8s/grafana | kubectl apply -f -
