@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+spec:
+  serviceName: postgres-headless
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-headless
+  template:
+    metadata:
+      labels:
+        app: postgres-headless
+    spec:
+      containers:
+        - env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: postgres-secret-config
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          name: postgres
+          image: postgres:16.2
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+          - name: pv-volume # postgres-pv-volume ?
+            mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+    - metadata:
+        name: pv-volume
+      spec:
+        accessModes: [ "ReadWriteOnce" ] #accessModes contains the desired access modes the volume should have
+        resources: #resources represents the minimum resources the volume should have.
+          requests: #Requests describes the minimum amount of compute resources required.
+            storage: 1Gi
+#      volumes:
+#        - name: postgres-pv-storage
+#          persistentVolumeClaim:
+#            claimName: postgres-pv-claim
