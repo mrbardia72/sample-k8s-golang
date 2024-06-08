@@ -11,7 +11,7 @@ spec:
   template:
     metadata:
       labels:
-        app: postgres-headless
+        app: postgres
     spec:
       containers:
         - env:
@@ -30,6 +30,12 @@ spec:
           volumeMounts:
           - name: pv-volume # postgres-pv-volume ?
             mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: conf
+          emptyDir: { }
+        - name: config-map
+          configMap:
+            name: postgres-config
   volumeClaimTemplates:
     - metadata:
         name: pv-volume

@@ -5,7 +5,7 @@ metadata:
   labels:
     type: local
 spec:
-  storageClassName: manual
+  storageClassName: ceph-block
   capacity:
     storage: 5Gi
   accessModes:
